@@ -65,8 +65,12 @@ export class ServiceDetailComponent implements OnInit {
             console.log(this.repairInstructions)
           })
         })
+      }else if(newStatus === 'Testing'){
+        this.servicingService
+      }else if(newStatus === 'Passport'){
+       console.log('Passport Generation')
       }
-    })
+    });
   }
 
   checkProgress(){
