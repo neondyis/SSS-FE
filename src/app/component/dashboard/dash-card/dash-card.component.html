@@ -1,0 +1,36 @@
+<mat-card class="mat-elevation-z4" [ngStyle]="{'width': width}">
+  <mat-card-header>
+    <mat-card-title class="mat-typography">
+      <p class="mat-subheading-2">
+        {{title}}
+      </p>
+    </mat-card-title>
+      <mat-icon *ngIf="title.includes('Orange') || title.includes('Yellow')" (click)="stockOnClick()">
+        add_circle_outline
+      </mat-icon>
+  </mat-card-header>
+  <div>
+    <mat-list *ngIf="detailList.length > 0">
+      <mat-list-item (click)="listItemOnClick($event, vacuum)" *ngFor="let vacuum of detailList">
+        <svg-icon [src]="'assets/custom icons/vacuums/'+(vacuum.type| lowercase)+'.svg'" [svgStyle]="{ 'width.px':25, 'height.px': 25}"></svg-icon>
+        <h3 matLine> {{vacuum.series.name}} </h3>
+        <p matLine>
+          <span> {{vacuum.model}} </span>
+          <span> -- {{vacuum.type}} </span>
+          <br/>
+          <span> {{vacuum.series.brand.name}} </span>
+      </mat-list-item>
+    </mat-list>
+    <mat-list *ngIf="serviceList.length > 0">
+      <mat-list-item (click)="serviceOnClick($event, service)" *ngFor="let service of serviceList">
+        <svg-icon [src]="'assets/custom icons/vacuums/'+(service.vacuum.type| lowercase)+'.svg'" [svgStyle]="{ 'width.px':25, 'height.px': 25}"></svg-icon>
+        <h3 matLine> {{service.vacuum.series.name}} </h3>
+        <p matLine>
+          <span> {{service.vacuum.model}} </span>
+          <span> -- {{service.vacuum.type}} </span>
+          <br/>
+          <span> {{service.vacuum.series.brand.name}} </span>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</mat-card>

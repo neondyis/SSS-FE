@@ -1,0 +1,47 @@
+<mat-grid-list cols="2" rowHeight="2:1">
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Series</mat-label>
+      <mat-select [formControl]="selectedSeries">
+        <mat-option *ngFor="let series of seriesList" [value]="series.value">
+          {{series.viewValue}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="selectedSeries.invalid">{{getErrorMessage(selectedSeries)}}</mat-error>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Model</mat-label>
+      <input matInput [formControl]="selectedModel">
+      <mat-error *ngIf="selectedModel.invalid">{{getErrorMessage(selectedModel)}}</mat-error>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Type</mat-label>
+      <mat-select [formControl]="selectedType">
+        <mat-option *ngFor="let type of types" [value]="type.value">
+          {{type.viewValue}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="selectedType.invalid">{{getErrorMessage(selectedType)}}</mat-error>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Status</mat-label>
+      <mat-select [formControl]="selectedStatus">
+        <mat-option *ngFor="let status of statuses" [value]="status.value">
+          {{status.viewValue}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="selectedStatus.invalid">{{getErrorMessage(selectedStatus)}}</mat-error>
+    </mat-form-field>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<div>
+  <button color="accent" mat-raised-button> Close </button>
+  <button mat-raised-button (click)="createVacuum()"> Create Vacuum </button>
+</div>

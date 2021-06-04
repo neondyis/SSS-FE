@@ -1,0 +1,38 @@
+.content-container {
+   padding: 10px;
+
+  .content-total-vacuums{
+    width: 100%;
+    margin: 0;
+  }
+
+  .flex-container{
+    .mini-dash-container{
+      width: -moz-available;
+      width: -webkit-fill-available;
+      width: fill-available;
+    }
+  }
+ }
+
+.title-group{
+  text-align: center;
+}
+
+.flex-container{
+  align-items: center;
+  place-content: center space-evenly;
+}
+
+.dialog-container{
+  mat-dialog-container{
+    border-radius: 10px;
+  }
+}
+
+.service-dash-card {
+  width: -moz-available;
+  width: -webkit-fill-available;
+  width: fill-available;
+}
+

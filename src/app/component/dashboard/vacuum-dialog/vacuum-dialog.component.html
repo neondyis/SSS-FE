@@ -1,0 +1,26 @@
+<mat-grid-list cols="2" rowHeight="1:1.75" class="vacuum-dialog-container">
+  <mat-grid-tile class="vacuum-dialog-image">
+    <svg-icon [src]="'assets/custom icons/vacuums/'+(data.type| lowercase)+'.svg'" [svgStyle]="{ 'width.px':90, 'height':'auto'}"></svg-icon>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <div  class="vacuum-dialog-info">
+      <p>Brand - {{data.series.brand.name}}</p>
+      <p>Series - {{data.series.name}}</p>
+      <p>Vacuum Type - {{data.type}}</p>
+      <p>Model - {{data.model}}</p>
+      <p>Status - {{data.status.name}} </p>
+      <p>{{data.status.description}}</p>
+      <div  *ngIf="data.status.color === 'Orange' || data.status.color === 'Yellow'">
+        <mat-form-field appearance="fill">
+          <mat-label>Label</mat-label>
+          <mat-select [(value)]="selectedLabel">
+            <mat-option *ngFor="let label of labelList" [value]="label._id">
+              {{label.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button (click)="startServicing()" mat-flat-button>Put in Service</button>
+      </div>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>

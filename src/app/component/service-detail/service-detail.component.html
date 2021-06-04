@@ -1,0 +1,170 @@
+<div>
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
+    <div class="servicing-detail-overview">
+      <mat-card class="servicing-detail-overview-card" *ngIf="service.vacuum">
+        <mat-card-header>
+          <mat-card-title>
+            <h2>{{service.vacuum.type | titlecase}} Vacuum</h2>
+          </mat-card-title>
+          <mat-card-subtitle>
+            <h3>The current stage of service is the {{service.status}} stage.</h3>
+            <h3>{{service.vacuum.label.name}} - {{service.vacuum.label.description}}</h3>
+            <h3>{{service.vacuum.model}} - {{service.vacuum.series.brand.name}} -{{service.vacuum.series.name}} </h3>
+          </mat-card-subtitle>
+          <div class="service-label-select">
+          <svg-icon [src]="'assets/custom icons/vacuums/'+(service.vacuum.type)+'.svg'"
+                    [svgStyle]="{ 'width.px':50, 'height':'auto', 'fill':'white'}"></svg-icon>
+            <mat-form-field appearance="fill">
+              <mat-label>Label</mat-label>
+              <mat-select [formControl]="selectFormControl" [(value)]="selectedLabel">
+                <mat-option *ngFor="let label of labelList" [value]="label._id">
+                  {{label.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="servicing-detail-overview-card-progress-container">
+            <mat-progress-bar class="servicing-detail-overview-card-progress" mode="determinate" color="accent"
+                              [value]="progress"></mat-progress-bar>
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
+              <mat-icon
+                class="progress-checkpoint">{{this.progress < 20 ? 'radio_button_unchecked' : 'check_circle'}}</mat-icon>
+              <mat-icon
+                class="progress-checkpoint">{{this.progress < 40 ? 'radio_button_unchecked' : 'check_circle'}}</mat-icon>
+              <mat-icon
+                class="progress-checkpoint">{{this.progress < 60 ? 'radio_button_unchecked' : 'check_circle'}}</mat-icon>
+              <mat-icon
+                class="progress-checkpoint">{{this.progress !== 100 ? 'radio_button_unchecked' : 'check_circle'}}</mat-icon>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
+              <h4 class="process-text">
+                Diagnose
+              </h4>
+              <h4 class="process-text">
+                Repair
+              </h4>
+              <h4 class="process-text">
+                Test
+              </h4>
+              <h4 class="process-text">
+                Passport
+              </h4>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="servicing-detail-spacer"></div>
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="32px grid" fxLayoutAlign="space-evenly center"
+       class="servicing-detail-info-container">
+    <div class="servicing-detail-info-card-container" fxFlex="0 1 calc(33.3% - 32px)"
+         fxFlex.lt-md="0 1 calc(50% - 10px)" fxFlex.lt-sm="100%">
+      <mat-card class="servicing-detail-info-card">
+        <mat-card-header>
+          <mat-card-title>
+            <h4>Diagnosis</h4>
+          </mat-card-title>
+          <mat-icon>search</mat-icon>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content class="detail-content">
+            <mat-accordion  *ngFor="let part of this.parts" class="headers-align" multi>
+              <mat-expansion-panel >
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <div mat-subheader>{{part}}</div>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    <mat-icon>
+                      person_search
+                    </mat-icon>
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div *ngIf="service.knowledgeBase">
+                  <div *ngFor="let issue of service.knowledgeBase.diagnose.issues">
+                    <div *ngIf="part === issue.part.name">
+                      <mat-checkbox (change)="updateSelectedIssues(issue)">{{issue.description}}</mat-checkbox>
+                    </div>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-card-actions>
+          <button mat-raised-button (click)="updateProgress('Diagnosing')">Start Diagnosing</button>
+          <button mat-raised-button (click)="updateProgress('Repairing')">Start Repairing</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="servicing-detail-info-card-container" fxFlex="0 1 calc(33.3% - 32px)"
+         fxFlex.lt-md="0 1 calc(50% - 10px)" fxFlex.lt-sm="100%">
+      <mat-card class="servicing-detail-info-card">
+        <mat-card-header>
+          <mat-card-title>
+            <h4>Repair</h4>
+          </mat-card-title>
+          <mat-icon>handyman</mat-icon>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content class="detail-content">
+          <mat-accordion  *ngFor="let repair of this.repairInstructions" class="headers-align" multi>
+            <mat-expansion-panel >
+              <mat-expansion-panel-header class="detail-content">
+                <mat-panel-title>
+                  <div mat-subheader><p>{{repair.issue}}</p></div>
+                </mat-panel-title>
+                <mat-panel-description>
+                  <mat-icon>
+                    build_circle
+                  </mat-icon>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <div *ngFor="let step of repair.repairSteps">
+                <div>
+                  <mat-checkbox >{{step.step}}. {{step.content}}</mat-checkbox>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-card-actions>
+          <button mat-raised-button (click)="updateProgress('Testing')">Start Testing</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="servicing-detail-info-card-container" fxFlex="0 1 calc(33.3% - 32px)"
+         fxFlex.lt-md="0 1 calc(50% - 10px)" fxFlex.lt-sm="100%">
+      <mat-card class="servicing-detail-info-card">
+        <mat-card-header>
+          <mat-card-title>
+            <h4>Testing</h4>
+          </mat-card-title>
+          <mat-icon>bug_report</mat-icon>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+<!--          <mat-list #tests>-->
+<!--            <mat-list-item *ngFor="let test of this.service?.knowledgeBase?.test">-->
+<!--&lt;!&ndash;              <div mat-subheader>{{test.stageTest[0].name}}</div>&ndash;&gt;-->
+<!--              <mat-selection-list #tests>-->
+<!--                <mat-list-option *ngFor="let stageTest of test.stageTest">-->
+<!--                  {{stageTest.name}}-->
+<!--                </mat-list-option>-->
+<!--              </mat-selection-list>-->
+<!--            </mat-list-item>-->
+<!--          </mat-list>-->
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-card-actions>
+          <button mat-raised-button (click)="updateProgress('Passport')">Generate Passport</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+

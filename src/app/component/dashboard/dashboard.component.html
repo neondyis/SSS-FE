@@ -1,0 +1,37 @@
+<!-- Angular material cards -->
+<div class="content-container">
+  <div class="flex-container" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="32px grid" fxLayoutAlign="space-evenly center">
+    <div class="mini-dash-container" fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 10px)" fxFlex.lt-sm="100%">
+      <app-mini-dash-card bgColor="#6dace8" title="Red Status Vacuum" icon="inventory_2" [content]="dashRes.redVacuums.length"></app-mini-dash-card>
+    </div>
+    <div class="mini-dash-container" fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 10px)" fxFlex.lt-sm="100%">
+      <app-mini-dash-card bgColor="#a2a6ae" title="Orange Status Vacuum" icon="handyman"  [content]="dashRes.orangeVacuums.length" ></app-mini-dash-card>
+    </div>
+    <div class="mini-dash-container" fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 10px)" fxFlex.lt-sm="100%">
+      <app-mini-dash-card bgColor="#525965" title="Yellow Status Vacuum" icon="check_circle_outline"  [content]="dashRes.yellowVacuums.length" ></app-mini-dash-card>
+    </div>
+    <div class="mini-dash-container" fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 10px)" fxFlex.lt-sm="100%">
+      <app-mini-dash-card bgColor="#525965" title="Green Status Vacuum" icon="check_circle_outline"  [content]="dashRes.greenVacuums.length" ></app-mini-dash-card>
+    </div>
+    <div class="mini-dash-container" fxFlex="0 1 calc(100% - 32px)" fxFlex.lt-md="0 1 calc(100% - 10px)" fxFlex.lt-sm="100%">
+      <app-mini-dash-card class="content-total-vacuums" bgColor="#ffaa41" title="Overall Vacuums" icon="store"  [content]="totalCount"></app-mini-dash-card>
+    </div>
+
+
+    <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
+      <app-dash-card title="Red Status Info-Card" [detailList]="dashRes.redVacuums" icon="inventory_2" fxLayoutAlign="space-evenly center" (vacuumSwap)="updateList($event)"></app-dash-card>
+    </div>
+    <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
+      <app-dash-card title="Orange Status Info-Card" [detailList]="dashRes.orangeVacuums" icon="inventory_2" fxLayoutAlign="space-evenly center" (vacuumSwap)="updateList($event)"></app-dash-card>
+    </div>
+    <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
+      <app-dash-card title="Yellow Status Info-Card" [detailList]="dashRes.yellowVacuums" icon="inventory_2" fxLayoutAlign="space-evenly center" (vacuumSwap)="updateList($event)"></app-dash-card>
+    </div>
+    <div fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%">
+      <app-dash-card title="Green Status Info-Card" [detailList]="dashRes.greenVacuums" icon="inventory_2" fxLayoutAlign="space-evenly center" (vacuumSwap)="updateList($event)"></app-dash-card>
+    </div>
+    <div class="service-dash-card" fxFlex="0 1 calc(100% - 32px)" fxFlex.lt-md="0 1 calc(100% - 10px)" fxFlex.lt-sm="100%">
+      <app-dash-card width="100%" title="Vacuums in service" [serviceList] ="this.serviceVacs" icon="inventory_2" fxLayoutAlign="space-evenly center" (vacuumSwap)="updateList($event)"></app-dash-card>
+    </div>
+  </div>
+</div>
