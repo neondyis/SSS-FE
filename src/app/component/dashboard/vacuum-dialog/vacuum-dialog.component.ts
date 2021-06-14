@@ -5,6 +5,7 @@ import {ServicingService} from "../../../service/servicing.service";
 import {VacuumService} from "../../../service/vacuum.service";
 import {LabelService} from "../../../service/label.service";
 import {Label} from "../../../interface/Label";
+import {Service} from "../../../interface/Service";
 
 @Component({
   selector: 'app-vacuum-dialog',
@@ -31,11 +32,14 @@ export class VacuumDialogComponent implements OnInit,OnDestroy {
   }
 
   startServicing(){
-    this.servicingService.startServicing({vacuum: this.data._id, status: "Starting"}).subscribe(()=>{
+    this.servicingService.startServicing({generatedRepairs: [], vacuum: this.data._id,
+      notes: [],
+      status: "Starting"}).subscribe((serviceRes:Service)=>{
       this.data.label = {_id: "", color: "", description: "", name: ""};
       this.data.label._id = this.selectedLabel;
-      this.vacuumService.updateVacuum(this.data).subscribe(_ => {
-        this.dialogRef.close(this.data);
+
+      this.vacuumService.updateVacuum(this.data).subscribe(res => {
+        this.dialogRef.close(serviceRes);
       })
     }
     )

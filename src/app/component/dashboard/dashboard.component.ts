@@ -18,13 +18,23 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     debounceTime(100);
-    this.dashboardService.getStock().subscribe(res => {
-      this.dashRes = res;
-      this.totalCount = this.dashRes.greenVacuums.length + this.dashRes.orangeVacuums.length + this.dashRes.yellowVacuums.length + this.dashRes.redVacuums.length;
-    });
     this.dashboardService.getServicing().subscribe(res => {
-      console.log(res)
       this.serviceVacs = res;
+      this.dashboardService.getStock().subscribe(res => {
+        this.dashRes = res;
+        for (const [key, value] of Object.entries(this.dashRes)) {
+          value.forEach((vacuum:Vacuum,index:number) => {
+            this.serviceVacs.forEach((sVacs:Service,sIndex:number) => {
+              if(vacuum._id === sVacs.vacuum._id && sVacs.status !== "Passport"){
+                value.splice(index,1);
+              }else if(sVacs.status === "Passport"){
+                this.serviceVacs.splice(sIndex,1);
+              }
+            })
+          })
+        }
+        this.updateCounts();
+      });
     });
   }
 
@@ -49,6 +59,11 @@ export class DashboardComponent implements OnInit {
     }finally {
       this.updateCounts()
     }
+  }
+
+  updateServiceList(service:Service){
+    console.log(service)
+    this.serviceVacs.push(service);
   }
 
   updateCounts(){

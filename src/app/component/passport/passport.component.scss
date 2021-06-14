@@ -1,0 +1,22 @@
+.center{
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+.center-full{
+  width: 100%;
+  background: #8DC26F;
+  position:relative;
+  height: 100%;
+  overflow:auto;
+}
+
+.konvajs-content {
+  width: 50% !important;
+  height: auto !important;
+  canvas {
+    width: 50% !important;
+    height: 100% !important;
+  }
+}

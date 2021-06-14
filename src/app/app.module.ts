@@ -37,6 +37,9 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { ServiceVacuumDialogComponent } from './component/dashboard/service-vacuum-dialog/service-vacuum-dialog.component';
+import { PassportComponent } from './component/passport/passport.component';
+import { NoteDialogComponent } from './component/note-dialog/note-dialog.component';
+import { QRDialogComponent } from './component/qrdialog/qrdialog.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,7 @@ import { ServiceVacuumDialogComponent } from './component/dashboard/service-vacu
     DashboardComponent,
     RepairDashComponent,
     KnowledgeDashComponent,
+    QRDialogComponent,
     VacuumDashComponent,
     DashCardComponent,
     VacuumComponent,
@@ -53,6 +57,9 @@ import { ServiceVacuumDialogComponent } from './component/dashboard/service-vacu
     CreateVacuumComponent,
     ServiceDetailComponent,
     ServiceVacuumDialogComponent,
+    PassportComponent,
+    NoteDialogComponent,
+    QRDialogComponent,
   ],
   imports: [
     BrowserModule,

@@ -20,7 +20,9 @@ mat-list-item:active {
 }
 
 mat-card{
-  width: 270px;
+  width: -moz-available;
+  width: -webkit-fill-available;
+  width: fill-available;
   border-radius: 10px;
   mat-card-header{
     justify-content: space-between;

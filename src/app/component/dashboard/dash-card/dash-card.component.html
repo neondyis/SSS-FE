@@ -5,7 +5,7 @@
         {{title}}
       </p>
     </mat-card-title>
-      <mat-icon *ngIf="title.includes('Orange') || title.includes('Yellow')" (click)="stockOnClick()">
+      <mat-icon *ngIf="title.includes('list')" (click)="stockOnClick()">
         add_circle_outline
       </mat-icon>
   </mat-card-header>
@@ -22,7 +22,7 @@
       </mat-list-item>
     </mat-list>
     <mat-list *ngIf="serviceList.length > 0">
-      <mat-list-item (click)="serviceOnClick($event, service)" *ngFor="let service of serviceList">
+      <mat-list-item (click)="serviceOnClick($event, service)" [ngStyle]="{'background-color': service.vacuum.label.color}" *ngFor="let service of serviceList">
         <svg-icon [src]="'assets/custom icons/vacuums/'+(service.vacuum.type| lowercase)+'.svg'" [svgStyle]="{ 'width.px':25, 'height.px': 25}"></svg-icon>
         <h3 matLine> {{service.vacuum.series.name}} </h3>
         <p matLine>

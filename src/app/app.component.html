@@ -1,5 +1,5 @@
 <div class="root-container">
-  <mat-toolbar role="toolbar" color="primary">
+  <mat-toolbar *ngIf="isLoggedIn" role="toolbar" color="primary">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
     <h1>{{title}}</h1>
   </mat-toolbar>

@@ -2,17 +2,15 @@
   <mat-grid-tile class="vacuum-dialog-image">
     <svg-icon [src]="'assets/custom icons/vacuums/'+(data.vacuum.type| lowercase)+'.svg'" [svgStyle]="{ 'width.px':90, 'height':'auto'}"></svg-icon>
   </mat-grid-tile>
-  <mat-grid-tile>
-    <div  class="vacuum-dialog-info">
+  <mat-grid-tile [ngStyle]="{'flex-direction': 'column'}">
+    <div class="vacuum-dialog-info">
       <p>Brand - {{data.vacuum.series.brand.name}}</p>
       <p>Series - {{data.vacuum.series.name}}</p>
       <p>Vacuum Type - {{data.vacuum.type}}</p>
       <p>Model - {{data.vacuum.model}}</p>
-      <p>Status - {{data.vacuum.status.name}} </p>
-      <p>{{data.vacuum.status.description}}</p>
-      <p>Label - {{data.vacuum.label.name}}</p>
-      <p>{{data.vacuum.label.description}}</p>
+      <p>Status - {{data.vacuum.status.description}} </p>
+      <p>Label - {{data.vacuum.label.description}}</p>
+      <button mat-flat-button *ngIf="data.vacuum.label !== undefined" (click)="navigateToService()">Go to Vacuum Detail</button>
     </div>
-    <button mat-flat-button *ngIf="data.vacuum.label !== undefined" (click)="navigateToService()">Go to Vacuum Detail</button>
   </mat-grid-tile>
 </mat-grid-list>

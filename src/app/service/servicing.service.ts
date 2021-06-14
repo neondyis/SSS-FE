@@ -6,6 +6,8 @@ import {Observable} from "rxjs";
 import {Service} from "../interface/Service";
 import {APIService} from "../interface/API/APIService";
 import {Vacuum} from "../interface/Vacuum";
+import {ServiceInfo} from "../interface/ServiceInfo";
+import {APIServiceInfo} from "../interface/API/APIServiceInfo";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +25,7 @@ export class ServicingService {
 
   startServicing(service:APIService):Observable<any>{
     return this.http.post<APIResponse>("http://localhost:3000/api/service",{status:service.status,vacuum:service.vacuum}).pipe(map(res => {
-      // console.log(res)
+      return res.data
     }))
   }
 
@@ -50,4 +52,26 @@ export class ServicingService {
   // getTestingInfo():Observable<any>{
   //   // return this.http.get()
   // }
+
+  updateServiceInfo(serviceInfo: APIServiceInfo, serviceInfoId:string):Observable<any>{
+    return this.http.put<APIResponse>(`http://localhost:3000/api/service/info/alt/${serviceInfoId}`, serviceInfo).pipe(map(res =>{
+        return res.data
+      }
+    ))
+  }
+
+  createServiceInfo(serviceInfo: APIServiceInfo):Observable<any>{
+    console.log(serviceInfo)
+    return this.http.post<APIResponse>(`http://localhost:3000/api/service/info`, serviceInfo).pipe(map(res =>{
+        return res.data
+      }
+    ))
+  }
+
+  getServiceInfo(serviceId: string):Observable<any>{
+    return this.http.get<APIResponse>(`http://localhost:3000/api/service/info/alt/${serviceId}`).pipe(map(res =>{
+        return res.data
+      }
+    ))
+  }
 }

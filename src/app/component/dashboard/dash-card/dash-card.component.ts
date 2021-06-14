@@ -13,63 +13,70 @@ import {ServiceVacuumDialogComponent} from "../service-vacuum-dialog/service-vac
   styleUrls: ['./dash-card.component.scss']
 })
 export class DashCardComponent implements OnInit {
-  @Input() title:string = '';
-  @Input() description: string | number = '';
+  @Input() title: string = '';
+  @Input() description: string | number = 0;
   @Input() useVisual: boolean = false;
   @Input() visualSource: string = '';
   @Input() detailList: Vacuum[] = [];
   @Input() serviceList: Service[] = [];
-  @Input() width:string='';
-  @Input() icon:string='';
+  @Input() width: string = '';
+  @Input() icon: string = '';
 
-  @Output('vacuumSwap') onVacuumRemoved:EventEmitter<Vacuum> = new EventEmitter<Vacuum>();
+  @Output('vacuumSwap') onVacuumRemoved: EventEmitter<Vacuum> = new EventEmitter<Vacuum>();
+  @Output('vacuumService') onVacuumServiced: EventEmitter<Service> = new EventEmitter<Service>();
 
-  constructor(public dialog: MatDialog) { }
-
-  ngOnInit(): void {
-    this.description = 0;
-    console.log(this.serviceList)
+  constructor(public dialog: MatDialog) {
   }
 
-  listItemOnClick(event:Event, vacuum:Vacuum){
+  ngOnInit(): void {
+  }
+
+  listItemOnClick(event: Event, vacuum: Vacuum) {
     const dialogRef = this.dialog.open(VacuumDialogComponent, {
       width: '500px',
-      data:  vacuum
+      data: vacuum
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result && this.detailList.length > 0){
-       this.detailList = this.detailList.filter(v => v._id !== vacuum._id );
-       this.description = 0;
-       this.onVacuumRemoved.emit(result);
+      if (result && this.detailList.length > 0) {
+        this.detailList = this.detailList.filter(v => v._id !== vacuum._id);
+        this.description = 0;
+        console.log(result)
+        this.onVacuumServiced.emit(result);
       }
     });
   }
 
-  serviceOnClick(event:Event, service:Service){
+  serviceOnClick(event: Event, service: Service) {
     const dialogRef = this.dialog.open(ServiceVacuumDialogComponent, {
       width: '500px',
-      data:  service
+      data: service
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      // if(result && this.detailList.length > 0){
-      //   this.detailList = this.detailList.filter(v => v._id !== vacuum._id );
-      //   this.description = 0;
-      //   this.onVacuumRemoved.emit(result);
-      // }
-    });
+    dialogRef.afterClosed().subscribe();
   }
 
-  stockOnClick(){
+  stockOnClick() {
     const dialogRef = this.dialog.open(CreateVacuumComponent, {
       width: '500px',
       panelClass: 'dialog-container'
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result && this.detailList.length > 0){
-        const vacuum:Vacuum = {_id:result.id,model:result.model,series: result.series,type:result.type,status:result.status, label: result.label};
+      if (result && this.detailList.length > 0) {
+        const vacuum: Vacuum = {
+          energy: result.energy,
+          weight: result.weight,
+          noiseLvl: result.noiseLvl,
+          serialNumber: result.serialNumber,
+          _id: result.id,
+          model: result.model,
+          series: result.series,
+          type: result.type,
+          status: result.status,
+          label: result.label,
+          year: result.year
+        };
         this.onVacuumRemoved.emit(vacuum)
       }
     });

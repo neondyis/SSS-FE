@@ -1,0 +1,7 @@
+<form class="example-form">
+  <mat-form-field class="example-full-width" >
+    <mat-label>Would you like to leave a note</mat-label>
+    <textarea [formControl]="note" matInput placeholder="Ex. There are a few scratches on the outside shell of the vacuum."></textarea>
+  </mat-form-field>
+  <button mat-raised-button (click)="saveNote()"> Add Note </button>
+</form>

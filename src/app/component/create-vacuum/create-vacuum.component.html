@@ -3,9 +3,11 @@
     <mat-form-field appearance="fill">
       <mat-label>Series</mat-label>
       <mat-select [formControl]="selectedSeries">
-        <mat-option *ngFor="let series of seriesList" [value]="series.value">
-          {{series.viewValue}}
-        </mat-option>
+        <mat-optgroup *ngFor="let brand of brandList | keyvalue" [label]="brand.key">
+          <mat-option *ngFor="let series of brand.value" [value]="series.value">
+            {{series.viewValue}}
+          </mat-option>
+        </mat-optgroup>
       </mat-select>
       <mat-error *ngIf="selectedSeries.invalid">{{getErrorMessage(selectedSeries)}}</mat-error>
     </mat-form-field>
@@ -15,6 +17,41 @@
       <mat-label>Model</mat-label>
       <input matInput [formControl]="selectedModel">
       <mat-error *ngIf="selectedModel.invalid">{{getErrorMessage(selectedModel)}}</mat-error>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Energy</mat-label>
+      <input matInput [formControl]="energy">
+      <mat-error *ngIf="selectedModel.invalid">{{getErrorMessage(energy)}}</mat-error>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Noise Level</mat-label>
+      <input matInput [formControl]="noiseLvl">
+      <mat-error *ngIf="selectedModel.invalid">{{getErrorMessage(noiseLvl)}}</mat-error>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Serial Number</mat-label>
+      <input matInput [formControl]="serialNumber">
+      <mat-error *ngIf="selectedModel.invalid">{{getErrorMessage(serialNumber)}}</mat-error>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Weight</mat-label>
+      <input matInput [formControl]="weight">
+      <mat-error *ngIf="selectedModel.invalid">{{getErrorMessage(weight)}}</mat-error>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="fill">
+      <mat-label>Year</mat-label>
+      <input matInput [formControl]="year">
+      <mat-error *ngIf="selectedModel.invalid">{{getErrorMessage(year)}}</mat-error>
     </mat-form-field>
   </mat-grid-tile>
   <mat-grid-tile>

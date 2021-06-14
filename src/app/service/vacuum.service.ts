@@ -19,6 +19,11 @@ export class VacuumService {
       series: vacuum.series._id,
       status: vacuum.status._id,
       model: vacuum.model,
+      year: vacuum.year,
+      noiseLvl: vacuum.noiseLvl,
+      serialNumber: vacuum.serialNumber,
+      energy: vacuum.energy,
+      weight: vacuum.weight,
       label: vacuum.label._id,
       type: vacuum.type
     }).pipe(map(res => {

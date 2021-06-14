@@ -8,15 +8,17 @@ import {VacuumDashComponent} from "./component/vacuum-dash/vacuum-dash.component
 import {KnowledgeDashComponent} from "./component/knowledge-dash/knowledge-dash.component";
 import {VacuumComponent} from "./component/vacuum/vacuum.component";
 import {ServiceDetailComponent} from "./component/service-detail/service-detail.component";
+import {PassportComponent} from "./component/passport/passport.component";
 
 const routes: Routes = [
   {path: '',   redirectTo: '/home', pathMatch: 'full'},
   {path:'login', component: LoginComponent},
-  {path:'repair-dash', component: RepairDashComponent},
-  {path:'vacuum-dash', component: VacuumDashComponent},
-  {path:'knowledge-dash', component: KnowledgeDashComponent},
-  {path: 'vacuum', component: VacuumComponent},
-  {path: 'service/detail/:id',component: ServiceDetailComponent},
+  {path:'generatedRepairs-dash', component: RepairDashComponent, data: { requiresLogin: true }, canActivate:[LoginActivate]},
+  {path:'vacuum-dash', component: VacuumDashComponent, data: { requiresLogin: true }, canActivate:[LoginActivate]},
+  {path:'knowledge-dash', component: KnowledgeDashComponent, data: { requiresLogin: true }, canActivate:[LoginActivate]},
+  {path: 'vacuum', component: VacuumComponent, data: { requiresLogin: true }, canActivate:[LoginActivate]},
+  {path: 'service/detail/:_id',component: ServiceDetailComponent, data: { requiresLogin: true }, canActivate:[LoginActivate]},
+  {path: 'passport/:_id', component: PassportComponent},
   {path:'home',component: DashboardComponent, data: { requiresLogin: true }, canActivate:[LoginActivate]}
 ];
 

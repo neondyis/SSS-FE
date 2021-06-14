@@ -16,7 +16,7 @@
                     [svgStyle]="{ 'width.px':50, 'height':'auto', 'fill':'white'}"></svg-icon>
             <mat-form-field appearance="fill">
               <mat-label>Label</mat-label>
-              <mat-select [formControl]="selectFormControl" [(value)]="selectedLabel">
+              <mat-select [disabled]="progress >= 100" [formControl]="selectFormControl" [(value)]="selectedLabel">
                 <mat-option *ngFor="let label of labelList" [value]="label._id">
                   {{label.name}}
                 </mat-option>
@@ -84,9 +84,11 @@
                   </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div *ngIf="service.knowledgeBase">
-                  <div *ngFor="let issue of service.knowledgeBase.diagnose.issues">
-                    <div *ngIf="part === issue.part.name">
-                      <mat-checkbox (change)="updateSelectedIssues(issue)">{{issue.description}}</mat-checkbox>
+                  <div *ngFor="let diagnosis of service.knowledgeBase.diagnose">
+                    <div *ngFor="let issue of diagnosis.issues">
+                      <div *ngIf="part === issue.part.name">
+                        <mat-checkbox [disabled]="progress >= 35" (change)="updateSelectedIssues(issue)" [checked]="setCheckedIssue(issue)">{{issue.description}}</mat-checkbox>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -95,8 +97,8 @@
         </mat-card-content>
         <mat-divider></mat-divider>
         <mat-card-actions>
-          <button mat-raised-button (click)="updateProgress('Diagnosing')">Start Diagnosing</button>
-          <button mat-raised-button (click)="updateProgress('Repairing')">Start Repairing</button>
+          <button mat-raised-button  [disabled]="this.progress >= 15" (click)="updateProgress('Diagnosing')">Start Diagnosing</button>
+          <button mat-raised-button  [disabled]="repairInstructions.length > 0" (click)="updateProgress('Repairing')">Start Repairing</button>
         </mat-card-actions>
       </mat-card>
     </div>
@@ -125,7 +127,7 @@
               </mat-expansion-panel-header>
               <div *ngFor="let step of repair.repairSteps">
                 <div>
-                  <mat-checkbox >{{step.step}}. {{step.content}}</mat-checkbox>
+                  <mat-checkbox [disabled]="progress >= 55" (change)="updateSelectedRepair(step)"  [checked]="setCheckedRepair(step)">{{step.step}}. {{step.content}}</mat-checkbox>
                 </div>
               </div>
             </mat-expansion-panel>
@@ -133,7 +135,7 @@
         </mat-card-content>
         <mat-divider></mat-divider>
         <mat-card-actions>
-          <button mat-raised-button (click)="updateProgress('Testing')">Start Testing</button>
+          <button mat-raised-button [disabled]="progress >= 55" (click)="updateProgress('Testing')">Start Testing</button>
         </mat-card-actions>
       </mat-card>
     </div>
@@ -148,20 +150,39 @@
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-card-content>
-<!--          <mat-list #tests>-->
-<!--            <mat-list-item *ngFor="let test of this.service?.knowledgeBase?.test">-->
-<!--&lt;!&ndash;              <div mat-subheader>{{test.stageTest[0].name}}</div>&ndash;&gt;-->
-<!--              <mat-selection-list #tests>-->
-<!--                <mat-list-option *ngFor="let stageTest of test.stageTest">-->
-<!--                  {{stageTest.name}}-->
-<!--                </mat-list-option>-->
-<!--              </mat-selection-list>-->
-<!--            </mat-list-item>-->
-<!--          </mat-list>-->
+          <mat-accordion  *ngFor="let test of this.testInstructions" class="headers-align" multi>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header class="detail-content">
+                <mat-panel-title>
+                  <div mat-subheader><p>{{test.order}}</p></div>
+                </mat-panel-title>
+                <mat-panel-description>
+                  <mat-icon>
+                    quiz
+                  </mat-icon>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-accordion *ngFor="let stage of test.stageTest">
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <mat-panel-description>
+                      <p>{{stage.name}}</p>
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+                  <div *ngFor="let content of stage.content">
+                    <mat-checkbox [disabled]="progress >= 100" (change)="updateSelectedTests(content)" [checked]="setCheckedTests(content)">{{content.step}}. {{content.content}}</mat-checkbox>
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </mat-expansion-panel>
+          </mat-accordion>
         </mat-card-content>
         <mat-divider></mat-divider>
         <mat-card-actions>
           <button mat-raised-button (click)="updateProgress('Passport')">Generate Passport</button>
+          <button mat-raised-button (click)="addNotes()">Add Notes</button>
+          <button mat-raised-button (click)="goToPassport()">Go To Passport</button>
+          <button mat-raised-button (click)="generateQRCode()">Generate QR Code</button>
         </mat-card-actions>
       </mat-card>
     </div>
