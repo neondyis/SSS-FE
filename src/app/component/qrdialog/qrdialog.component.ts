@@ -17,7 +17,7 @@ export class QRDialogComponent implements OnInit {
       width: 300,
       height: 300,
       type: "svg",
-      data: `https://sss-foenix.herokuapp.com/passport/${this.data}`,
+      data: `https://sss-fe.vercel.app/passport/${this.data}`,
       image: '../../assets/passport/icons/logo.png',
       dotsOptions: {
         color: "#4267b2",
