@@ -4,6 +4,7 @@ import {Observable, Subject} from "rxjs";
 import { DateTime } from "luxon";
 import {shareReplay, tap} from "rxjs/operators";
 import {User} from "../interface/User";
+import { environment } from "../../environments/environment";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -21,7 +22,7 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   login(username:string, password:string):Observable<any> {
-    return this.http.post<Observable<any>>("http://localhost:3000/api/auth/login",{username,password},httpOptions)
+    return this.http.post<Observable<any>>(`${environment.BASEAPI}api/auth/login`,{username,password},httpOptions)
       .pipe(tap(res => {
         this.setSession(res);
         console.log(res)
@@ -32,7 +33,6 @@ export class LoginService {
     const expiresAt = DateTime.now().plus({seconds: authResult.data.expiresIn.toString().slice(0,authResult.data.expiresIn.toString().length-1)});
 
     localStorage.setItem('id_token', authResult.data.idToken);
-    console.log(this.user)
     localStorage.setItem("expires_at", JSON.stringify(expiresAt.valueOf()) );
   }
 

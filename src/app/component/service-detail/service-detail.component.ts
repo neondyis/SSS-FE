@@ -40,7 +40,6 @@ export class ServiceDetailComponent implements OnInit {
   selectedLabel:string = "";
   testInstructions: Test[] = [];
   selectedTests: string[] = [];
-  repairNote: string = '';
   repairInstructions:{issue:string,repairSteps:RepairStep[]}[] = [];
 
   constructor( private route: ActivatedRoute,
@@ -91,12 +90,14 @@ export class ServiceDetailComponent implements OnInit {
       if(newStatus === 'Repairing'){
         this.servicingService.getRepairInfo(this.selectedIssues).subscribe(res =>{
           const data:Repair[] = res;
+          console.log(res);
           this.servicingService.updateServiceVacuum({
             notes: [],
-            generatedRepairs: data.map(repair => repair._id), status:newStatus,vacuum:this.service.vacuum._id},this.service._id).subscribe(res => {
+            generatedRepairs: data.map(repair => repair._id), status:newStatus,vacuum:this.service.vacuum._id},this.service._id).subscribe((res:Service) => {
             data.forEach(repair => {
               this.repairInstructions.push({issue:repair.issue.description,repairSteps:repair.repairSteps});
             });
+            console.log(res);
             this.service = res;
             this.servicingService.createServiceInfo({diagnosis: this.selectedIssues, repairs: this.selectedRepairs, tests: [], service: this.service._id}).subscribe((res:ServiceInfo) =>
               this.serviceInfoId = res._id)
@@ -115,6 +116,7 @@ export class ServiceDetailComponent implements OnInit {
         this.servicingService.updateServiceVacuum({
           notes: [],
           generatedRepairs: this.service.generatedRepairs.map(repair => repair._id) , status:newStatus,vacuum:this.service.vacuum._id},this.service._id).subscribe(_ =>{
+            console.log(this.serviceInfoId)
           this.servicingService.updateServiceInfo({diagnosis: this.selectedIssues, repairs: this.selectedRepairs, service: this.service._id, tests: this.selectedTests},this.serviceInfoId).subscribe(res => {
             this.service.vacuum.label._id = "60b6497c5ad80aed0de9e27e";
             this.service.vacuum.status._id = "60b6487b5ad80aed0de9e279";
@@ -206,6 +208,7 @@ export class ServiceDetailComponent implements OnInit {
 
   goToPassport() {
     this.passportService.getPassportByVacuum(this.service.vacuum._id).subscribe((res:Passport) =>{
+      console.log(res)
       this.router.navigate(['/passport/',res._id]);
     });
   }

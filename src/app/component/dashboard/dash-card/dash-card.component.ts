@@ -63,7 +63,7 @@ export class DashCardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result && this.detailList.length > 0) {
+      if (result) {
         const vacuum: Vacuum = {
           energy: result.energy,
           weight: result.weight,

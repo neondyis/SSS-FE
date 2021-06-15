@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
         for (const [key, value] of Object.entries(this.dashRes)) {
           value.forEach((vacuum:Vacuum,index:number) => {
             this.serviceVacs.forEach((sVacs:Service,sIndex:number) => {
-              if(vacuum._id === sVacs.vacuum._id && sVacs.status !== "Passport"){
+              if(vacuum._id === sVacs.vacuum._id || sVacs.status !== "Passport"){
                 value.splice(index,1);
               }else if(sVacs.status === "Passport"){
                 this.serviceVacs.splice(sIndex,1);
@@ -39,6 +39,7 @@ export class DashboardComponent implements OnInit {
   }
 
   updateList(vacuum:Vacuum){
+    console.log(vacuum);
     try{
       switch (vacuum.status.color) {
         case "Red":

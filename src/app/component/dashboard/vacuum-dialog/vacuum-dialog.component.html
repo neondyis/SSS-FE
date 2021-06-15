@@ -21,6 +21,9 @@
         </mat-form-field>
         <button (click)="startServicing()" mat-flat-button>Put in Service</button>
       </div>
+      <div  *ngIf="data.status.color === 'Green'">
+        <button (click)="navigateToService()" mat-flat-button>Navigate to completed Service</button>
+      </div>
     </div>
   </mat-grid-tile>
 </mat-grid-list>

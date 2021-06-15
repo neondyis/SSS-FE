@@ -6,6 +6,7 @@ import {map} from "rxjs/operators";
 import {APIResponse} from "../interface/API/APIResponse";
 import {DashboardResponse} from "../interface/API/DashboardResponse";
 import {ServicingService} from "./servicing.service";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class DashboardService {
   constructor(private http: HttpClient, private servicingService:ServicingService) { }
 
   getStock():Observable<DashboardResponse> {
-    return this.http.get<APIResponse>("http://localhost:3000/api/vacuum").pipe(map(res => {
+    return this.http.get<APIResponse>(`${environment.BASEAPI}api/vacuum`).pipe(map(res => {
       const greenVacuums:Vacuum[] = res.data.filter((vacuum:Vacuum) => vacuum.status.color === "Green");
       const yellowVacuums:Vacuum[] = res.data.filter((vacuum:Vacuum) => vacuum.status.color === "Yellow");
       const orangeVacuums:Vacuum[] = res.data.filter((vacuum:Vacuum) => vacuum.status.color === "Orange");

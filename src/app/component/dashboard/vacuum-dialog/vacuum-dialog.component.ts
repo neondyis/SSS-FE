@@ -6,6 +6,7 @@ import {VacuumService} from "../../../service/vacuum.service";
 import {LabelService} from "../../../service/label.service";
 import {Label} from "../../../interface/Label";
 import {Service} from "../../../interface/Service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-vacuum-dialog',
@@ -18,6 +19,7 @@ export class VacuumDialogComponent implements OnInit,OnDestroy {
 
   constructor(public dialogRef:MatDialogRef<VacuumDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: Vacuum,
               private servicingService: ServicingService,
+              private router: Router,
               private vacuumService:VacuumService,
               private labelService:LabelService) {
   }
@@ -39,9 +41,14 @@ export class VacuumDialogComponent implements OnInit,OnDestroy {
       this.data.label._id = this.selectedLabel;
 
       this.vacuumService.updateVacuum(this.data).subscribe(res => {
+        serviceRes.vacuum = res;
         this.dialogRef.close(serviceRes);
       })
     }
     )
+  }
+
+  navigateToService() {
+    this.router.navigate(['/service/detail',this.data._id]).then(_=>this.dialogRef.close())
   }
 }

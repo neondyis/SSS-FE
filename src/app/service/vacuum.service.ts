@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {APIVacuum} from "../interface/API/APIVacuum";
 import {map} from "rxjs/operators";
 import {APIResponse} from "../interface/API/APIResponse";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class VacuumService {
   }
 
   updateVacuum(vacuum: Vacuum): Observable<any> {
-    return this.http.put<APIResponse>(`http://localhost:3000/api/vacuum/${vacuum._id}`, {
+    return this.http.put<APIResponse>(`${environment.BASEAPI}api/vacuum/${vacuum._id}`, {
       series: vacuum.series._id,
       status: vacuum.status._id,
       model: vacuum.model,
@@ -32,6 +33,6 @@ export class VacuumService {
   }
 
   createVacuum(vacuum: APIVacuum): Observable<any> {
-    return this.http.post(`http://localhost:3000/api/vacuum/`, vacuum);
+    return this.http.post(`${environment.BASEAPI}api/vacuum/`, vacuum);
   }
 }

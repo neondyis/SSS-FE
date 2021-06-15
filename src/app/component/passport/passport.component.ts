@@ -293,7 +293,7 @@ export class PassportComponent implements OnInit {
 
     let notes:string='';
     this.serviceHistory.forEach(history => history.service.notes.forEach(note=> notes += note + '\n'));
-    const wearContent = this.textService.simpleTextNode(420,690,notes,35,500,'#000000',true);
+    const wearContent = this.textService.simpleTextNode(390,690,notes,30,500,'#000000',true);
 
 
     const footer = this.textService.simpleTextNode(20, 941, 'P<NLDDE<MIELE<<.WSD<3<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n' +
@@ -323,7 +323,8 @@ export class PassportComponent implements OnInit {
     this.serviceHistory.forEach((history,index) => {
       const historyContainer = this.shapeService.rectangle(20, 600+(100*(index)), 900, 100, 'rgba(176,241,255,0.36)', 5, true,true);
       let repairText = '';
-      history.serviceInfo.service.knowledgeBase.repair.forEach(repair => repairText += repair.issue.description + '\n');
+      history.service.generatedRepairs.forEach(repair => repairText += repair.issue.description + '\n');
+      console.log(history)
       const date = DateTime.fromISO(history.service.createdAt.toString());
       const year = this.textService.simpleTextNode(45,635,date.year.toString(),40,100,'#000000',false);
       const serviceDescription = this.textService.simpleTextNode(170,635,repairText,25,600,'#000000',false);

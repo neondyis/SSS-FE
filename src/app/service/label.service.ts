@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {APIResponse} from "../interface/API/APIResponse";
 import {map} from "rxjs/operators";
+import { environment } from "../../environments/environment";
 
 
 const httpOptions = {
@@ -20,7 +21,7 @@ export class LabelService {
   constructor(private http: HttpClient) { }
 
   getLabelList():Observable<any>{
-    return this.http.get<APIResponse>("http://localhost:3000/api/label").pipe(map(res =>{
+    return this.http.get<APIResponse>(`${environment.BASEAPI}api/label`).pipe(map(res =>{
         return res.data
       }
     ))
