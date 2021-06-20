@@ -2,7 +2,7 @@
 <div class="content-container">
   <div class="flex-container" fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="32px grid" fxLayoutAlign="space-evenly center">
     <div class="mini-dash-container" fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 10px)" fxFlex.lt-sm="100%">
-      <app-mini-dash-card bgColor="#6dace8" title="Salvage for parts Vacuums" icon="inventory_2" [content]="dashRes.redVacuums.length"></app-mini-dash-card>
+      <app-mini-dash-card bgColor="#6dace8" title="Vacuums to be salvaged for parts" icon="inventory_2" [content]="dashRes.redVacuums.length"></app-mini-dash-card>
       <app-dash-card title="List" [detailList]="dashRes.redVacuums" icon="inventory_2" fxLayoutAlign="space-evenly center" (vacuumSwap)="updateList($event)"></app-dash-card>
     </div>
     <div class="mini-dash-container" fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 10px)" fxFlex.lt-sm="100%">

@@ -19,6 +19,7 @@ import {Passport} from "../../interface/Passport";
 import {MatDialog} from "@angular/material/dialog";
 import {NoteDialogComponent} from "../note-dialog/note-dialog.component";
 import {QRDialogComponent} from "../qrdialog/qrdialog.component";
+import {AddVacuumImageComponent} from "./add-vacuum-image/add-vacuum-image.component";
 
 @Component({
   selector: 'app-service-detail',
@@ -116,7 +117,6 @@ export class ServiceDetailComponent implements OnInit {
         this.servicingService.updateServiceVacuum({
           notes: [],
           generatedRepairs: this.service.generatedRepairs.map(repair => repair._id) , status:newStatus,vacuum:this.service.vacuum._id},this.service._id).subscribe(_ =>{
-            console.log(this.serviceInfoId)
           this.servicingService.updateServiceInfo({diagnosis: this.selectedIssues, repairs: this.selectedRepairs, service: this.service._id, tests: this.selectedTests},this.serviceInfoId).subscribe(res => {
             this.service.vacuum.label._id = "60b6497c5ad80aed0de9e27e";
             this.service.vacuum.status._id = "60b6487b5ad80aed0de9e279";
@@ -222,6 +222,16 @@ export class ServiceDetailComponent implements OnInit {
       dialogRef.afterClosed().subscribe((result:string[]) => {
 
       });
+    });
+  }
+
+  addVacuumImage() {
+    const dialogRef = this.dialog.open(AddVacuumImageComponent, {
+      width: '500px',
+      data: this.service
+    });
+    dialogRef.afterClosed().subscribe((result:string[]) => {
+
     });
   }
 }

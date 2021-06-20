@@ -5,6 +5,7 @@ export interface Disassemble {
   step: number;
   knowledgeBase: string;
   content:string;
+  image: string;
   createdAt: Date;
   updatedAt: Date;
 }

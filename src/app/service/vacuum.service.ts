@@ -26,7 +26,10 @@ export class VacuumService {
       energy: vacuum.energy,
       weight: vacuum.weight,
       label: vacuum.label._id,
-      type: vacuum.type
+      type: vacuum.type,
+      front: vacuum.front,
+      back: vacuum.back,
+      side: vacuum.side
     }).pipe(map(res => {
       return res.data
     }))

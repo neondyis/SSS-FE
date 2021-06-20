@@ -40,6 +40,7 @@ import { ServiceVacuumDialogComponent } from './component/dashboard/service-vacu
 import { PassportComponent } from './component/passport/passport.component';
 import { NoteDialogComponent } from './component/note-dialog/note-dialog.component';
 import { QRDialogComponent } from './component/qrdialog/qrdialog.component';
+import { AddVacuumImageComponent } from './component/service-detail/add-vacuum-image/add-vacuum-image.component';
 
 @NgModule({
   declarations: [
@@ -60,10 +61,10 @@ import { QRDialogComponent } from './component/qrdialog/qrdialog.component';
     PassportComponent,
     NoteDialogComponent,
     QRDialogComponent,
+    AddVacuumImageComponent,
   ],
   imports: [
     BrowserModule,
-    AngularSvgIconModule.forRoot(),
     MatDialogModule,
     FlexLayoutModule,
     AppRoutingModule,
@@ -85,6 +86,7 @@ import { QRDialogComponent } from './component/qrdialog/qrdialog.component';
     MatExpansionModule,
     ScrollingModule,
     MatCheckboxModule,
+    AngularSvgIconModule.forRoot(),
   ],
   providers: [LoginActivate, {provide: HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}],
   bootstrap: [AppComponent]

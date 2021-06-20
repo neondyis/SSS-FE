@@ -1,0 +1,87 @@
+<form class="form" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="form-group">
+    <mat-form-field>
+      <mat-label>Type</mat-label>
+      <mat-select (selectionChange)="onChange($event,'type')">
+        <mat-option *ngFor="let type of types" [value]="type.value">
+          {{type.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br/>
+    <mat-form-field *ngIf="this.form.get('type')!.value === 'Note' || this.form.get('type')!.value.includes('Vacuum')">
+      <mat-label>ID of Selected Type</mat-label>
+      <input formControlName="id" matInput name="id" id="id" type="text" (change)="onChange($event,'id')">
+    </mat-form-field>
+    <br/>
+    <input class="form-control-file border" multiple name="multi-files" id="input-files" type="file"
+           (change)="upload($event)">
+    <br/>
+    <mat-form-field *ngIf="this.form.get('type')!.value === 'Note'">
+      <mat-label>NoteID</mat-label>
+      <mat-select (selectionChange)="onChange($event,'note')">
+        <mat-option *ngFor="let note of notes" [value]="note._id">
+          {{note.content}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="this.form.get('type')!.value !== 'Note' && !this.form.get('type')!.value.includes('Vacuum')">
+      <mat-label>
+        {{this.form.get('type')!.value}} List
+      </mat-label>
+      <mat-select (selectionChange)="onChange($event,'note')">
+        <mat-optgroup *ngFor="let group of knowledgeGroups" [label]="group.groupName">
+          <ng-container *ngFor="let repair of group.data">
+            <mat-option *ngIf="group.groupName === 'Repair'" [value]="repair.issue._id">
+              {{repair.issue.description}}
+            </mat-option>
+            <mat-option *ngIf="group.groupName === 'Disassemble'" [value]="repair._id">
+              {{repair._id}}
+            </mat-option>
+            <ng-container  *ngIf="group.groupName === 'Test'">
+              <mat-optgroup *ngFor="let stage of repair.stageTest" [label]="stage.description">
+                <mat-option *ngFor="let content of stage.content" [value]="content._id">
+                  {{content.step}} - {{content.content}}
+                </mat-option>
+              </mat-optgroup>
+            </ng-container>
+            <ng-container *ngIf="group.groupName === 'Diagnose'" >
+              <mat-option *ngFor="let issue of repair.issues" [value]="issue._id">
+                {{issue.part.name}} - {{issue.description}}
+              </mat-option>
+            </ng-container>
+          </ng-container>
+
+          <!--          <div *ngIf="group.groupName === 'Repair'">-->
+          <!--            <mat-option *ngFor="let repair of group.data" [value]="repair.issue._id">-->
+          <!--              {{repair.issue.description}}-->
+          <!--              {{log(repair.issue.description)}}-->
+          <!--            </mat-option>-->
+          <!--          </div>-->
+          <!--          <div *ngIf="group.groupName === 'Disassemble'">-->
+          <!--            <mat-option *ngFor="let disassemble of group!.data" [value]="disassemble._id">-->
+          <!--              {{disassemble.step}}-{{disassemble.content}}-->
+          <!--              {{'qwdwqdwqdwd'}}-->
+          <!--            </mat-option>-->
+          <!--          </div>-->
+          <!--          <div *ngIf="group.groupName === 'Test'">-->
+          <!--            <mat-option *ngFor="let stageTestContent of group!.data['stageTest'].content" [value]="stageTestContent">-->
+          <!--              {{stageTestContent}}-{{stageTestContent}}-->
+          <!--            </mat-option>-->
+          <!--          </div>-->
+          <!--          <div *ngIf="group.groupName === 'Diagnose'">-->
+          <!--            <mat-option *ngFor="let issue of group!.data.issues" [value]="issue._id">-->
+          <!--              {{issue.description}}-->
+          <!--            </mat-option>-->
+          <!--          </div>-->
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-danger">Upload</button>
+  </div>
+</form>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

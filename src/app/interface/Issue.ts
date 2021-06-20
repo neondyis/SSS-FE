@@ -5,4 +5,5 @@ export interface Issue {
   description: string;
   diagnose: string;
   part: Part;
+  image: string;
 }

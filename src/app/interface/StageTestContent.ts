@@ -5,4 +5,5 @@ export interface StageTestContent {
   content: string;
   stage: StageTest;
   step: number;
+  image: string;
 }

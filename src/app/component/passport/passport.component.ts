@@ -8,6 +8,7 @@ import {Vacuum} from "../../interface/Vacuum";
 import {History} from "../../interface/History";
 import {Passport} from "../../interface/Passport";
 import { DateTime } from 'luxon';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-passport',
@@ -201,14 +202,10 @@ export class PassportComponent implements OnInit {
     layer.add(background);
   }
 
-  // TODO Update info taken when making a vacuum
   initFirstPage() {
-    if(this.vacuum){
-
-    }
     const pageTitle = this.textService.simpleTextNode(this.stage1.width()/5, 450, "INFOWASPORT", 20, 200, '#9bcde0', true);
 
-    const deviceBox = this.shapeService.rectangle(20, 470+90, 170, 250, '#9bcde0', 5, true);
+    this.shapeService.sticker(20, 470+90, `${environment.BASEAPI}image/${this.vacuum.front}`, 190, 250, true,this.layer1);
 
     const productMaker = this.textService.simpleTextNode(285, 670+90, "Merk", 20, 200, '#9bcde0', true);
     const productMarkerContent = this.textService.simpleTextNode(285, 690+90, this.vacuum.series.brand.name, 20, 200, '#000000', true);
@@ -235,10 +232,10 @@ export class PassportComponent implements OnInit {
     const typeNumberContent = this.textService.simpleTextNode(645, 715+90,  this.vacuum.serialNumber.toString().substring(0,5), 20, 200, '#000000', true);
     this. shapeService.sticker(580, 670+90, '../../assets/passport/icons/barcode.png', 60, 60, true, this.layer1);
 
-    const footer = this.textService.simpleTextNode(20, 941, 'P<NLDDE<MIELE<<.WSD<3<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n' +
-      'SPECI2020NL>E-NR:WRV359DRGJNERG3I48JNS38549<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<', 20, 980, '#000000', true);
+    const footer = this.textService.simpleTextNode(20, 941, `P<NLDDE<${this.vacuum.series.brand.name.toUpperCase()}<<.WSD<3<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n` +
+      `SPECI2020NL>E-NR:WRV359DRGJNERG3I48JNS38549<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<`, 20, 980, '#000000', true);
 
-    this.layer1.add(pageTitle, deviceBox, productMaker, productName, productYear, serialNumber, noiseLevel,typeNumber);
+    this.layer1.add(pageTitle, productMaker, productName, productYear, serialNumber, noiseLevel,typeNumber);
     this.layer1.add(productMarkerContent,productNameContent,productYearContent,serialNumberContent,noiseLevelContent,typeNumberContent);
     this.layer1.add(footer);
   }
@@ -261,8 +258,8 @@ export class PassportComponent implements OnInit {
 
 
 
-    const footer = this.textService.simpleTextNode(20, 941, 'P<NLDDE<MIELE<<.WSD<3<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n' +
-      'SPECI2020NL>E-NR:WRV359DRGJNERG3I48JNS38549<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<', 20, 980, '#000000', true);
+    const footer = this.textService.simpleTextNode(20, 941, `P<NLDDE<${this.vacuum.series.brand.name.toUpperCase()}<<.WSD<3<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n` +
+      `SPECI2020NL>E-NR:WRV359DRGJNERG3I48JNS38549<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<`, 20, 980, '#000000', true);
 
     this.layer2.add(pageTitle);
     this.layer2.add(footer)
@@ -281,27 +278,27 @@ export class PassportComponent implements OnInit {
     this.shapeService.sticker((this.stage1.width()/5)-10, 540, '../../assets/passport/icons/test.png', 40, 40, true, this.layer3);
 
     // Device Picture Boxes
-    const frontDeviceBox = this.shapeService.rectangle(75, 130, 200, 300, '#9bcde0', 5, true);
+    this.shapeService.sticker(75, 130, `${environment.BASEAPI}image/${this.vacuum.front}`, 200, 300,  true,this.layer3);
 
-    const backDeviceBox = this.shapeService.rectangle(400, 130, 200, 300, '#9bcde0', 5, true);
+    this.shapeService.sticker(400, 130, `${environment.BASEAPI}image/${this.vacuum.back}`, 200, 300,  true,this.layer3);
 
-    const sideDeviceBox = this.shapeService.rectangle(700, 130, 200, 300, '#9bcde0', 5, true);
+    this.shapeService.sticker(700, 130, `${environment.BASEAPI}image/${this.vacuum.side}`, 200, 300,  true,this.layer3);
+
 
     const wear = this.shapeService.rectangle(55, 610, 860, 300, '#9bcde0', 5, true,true);
 
-    this.shapeService.sticker(110,660,'../../assets/passport/icons/vacuum_part.png',200,200,true,this.layer3);
+    const footer = this.textService.simpleTextNode(20, 941, `P<NLDDE<${this.vacuum.series.brand.name.toUpperCase()}<<.WSD<3<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n` +
+      `SPECI2020NL>E-NR:WRV359DRGJNERG3I48JNS38549<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<`, 20, 980, '#000000', true);
 
-    let notes:string='';
-    this.serviceHistory.forEach(history => history.service.notes.forEach(note=> notes += note + '\n'));
-    const wearContent = this.textService.simpleTextNode(390,690,notes,30,500,'#000000',true);
-
-
-    const footer = this.textService.simpleTextNode(20, 941, 'P<NLDDE<MIELE<<.WSD<3<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n' +
-      'SPECI2020NL>E-NR:WRV359DRGJNERG3I48JNS38549<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<', 20, 980, '#000000', true);
-
-    this.layer3.add(frontDeviceBox,backDeviceBox,sideDeviceBox,wear,wearContent);
+    this.layer3.add(wear);
     this.layer3.add(pageTitle1,pageTitle2,subTitle1,subTitle2);
     this.layer3.add(footer)
+    this.serviceHistory.forEach(history => history.service.notes.forEach((note,index)=>
+    {
+      this.shapeService.sticker(93,660+(120*index),`${environment.BASEAPI}image/${note.image}`,100,100,true,this.layer3);
+      const wearContent = this.textService.simpleTextNode(225,660+(120*index),note.content,30,500,'#000000',true);
+      this.layer3.add(wearContent);
+    }));
   }
 
   initFourthPage() {
@@ -324,15 +321,14 @@ export class PassportComponent implements OnInit {
       const historyContainer = this.shapeService.rectangle(20, 600+(100*(index)), 900, 100, 'rgba(176,241,255,0.36)', 5, true,true);
       let repairText = '';
       history.service.generatedRepairs.forEach(repair => repairText += repair.issue.description + '\n');
-      console.log(history)
       const date = DateTime.fromISO(history.service.createdAt.toString());
       const year = this.textService.simpleTextNode(45,635,date.year.toString(),40,100,'#000000',false);
       const serviceDescription = this.textService.simpleTextNode(170,635,repairText,25,600,'#000000',false);
       this.layer4.add(historyContainer, year,serviceDescription);
     });
 
-    const footer = this.textService.simpleTextNode(20, 941, 'P<NLDDE<MIELE<<.WSD<3<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n' +
-      'SPECI2020NL>E-NR:WRV359DRGJNERG3I48JNS38549<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<', 20, 980, '#000000', true);
+    const footer = this.textService.simpleTextNode(20, 941, `P<NLDDE<${this.vacuum.series.brand.name.toUpperCase()}<<.WSD<3<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n` +
+      `SPECI2020NL>E-NR:WRV359DRGJNERG3I48JNS38549<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<`, 20, 980, '#000000', true);
 
     this.layer4.add(pageTitle1,pageTitle2,subTitle1,subTitle2);
     this.layer4.add(footer)

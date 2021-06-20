@@ -67,7 +67,7 @@ export class ServicingService {
   }
 
   getServiceInfo(serviceId: string):Observable<any>{
-    return this.http.get<APIResponse>(`http://localhost:3000/api/service/info/alt/${serviceId}`).pipe(map(res =>{
+    return this.http.get<APIResponse>(`${environment.BASEAPI}api/service/info/alt/${serviceId}`).pipe(map(res =>{
         return res.data
       }
     ))

@@ -27,12 +27,6 @@ export class CreateVacuumComponent implements OnInit {
     {value: '60b647465ad80aed0de9e276', viewValue: 'Repair Crucial'},
     {value: '60b645cd5ad80aed0de9e275', viewValue: 'Harvest for part'},
   ];
-  // statusesColorCode: Selection[] = [
-  //   {value: '60b6487b5ad80aed0de9e279', viewValue: 'Green'},
-  //   {value: '60b648515ad80aed0de9e278', viewValue: 'Yellow'},
-  //   {value: '60b647465ad80aed0de9e276', viewValue: 'Orange'},
-  //   {value: '60b645cd5ad80aed0de9e275', viewValue: 'Red'},
-  // ];
   seriesList: { value: string, viewValue: string }[] = [];
   selectedModel = new FormControl('', [Validators.required]);
   selectedSeries = new FormControl('', [Validators.required]);

@@ -14,4 +14,7 @@ export interface Vacuum {
   energy: number;
   status: Status;
   label: Label;
+  front: string;
+  back: string;
+  side: string;
 }

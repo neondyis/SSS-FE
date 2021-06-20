@@ -21,7 +21,6 @@ export class DashboardService {
       const yellowVacuums:Vacuum[] = res.data.filter((vacuum:Vacuum) => vacuum.status.color === "Yellow");
       const orangeVacuums:Vacuum[] = res.data.filter((vacuum:Vacuum) => vacuum.status.color === "Orange");
       const redVacuums:Vacuum[] = res.data.filter((vacuum:Vacuum) => vacuum.status.color === "Red");
-
       return { greenVacuums: greenVacuums, orangeVacuums: orangeVacuums, redVacuums: redVacuums, yellowVacuums: yellowVacuums };
     }))
   }

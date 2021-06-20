@@ -9,7 +9,7 @@ export interface Service {
   user: User;
   status: string;
   generatedRepairs: Repair[];
-  notes: string[];
+  notes: {_id: string, content: string, image: string}[];
   knowledgeBase: KnowledgeBase;
   createdAt: string;
   updatedAt: string;

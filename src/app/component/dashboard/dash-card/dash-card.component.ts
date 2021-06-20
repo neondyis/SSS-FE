@@ -41,7 +41,6 @@ export class DashCardComponent implements OnInit {
       if (result && this.detailList.length > 0) {
         this.detailList = this.detailList.filter(v => v._id !== vacuum._id);
         this.description = 0;
-        console.log(result)
         this.onVacuumServiced.emit(result);
       }
     });
@@ -64,20 +63,7 @@ export class DashCardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        const vacuum: Vacuum = {
-          energy: result.energy,
-          weight: result.weight,
-          noiseLvl: result.noiseLvl,
-          serialNumber: result.serialNumber,
-          _id: result.id,
-          model: result.model,
-          series: result.series,
-          type: result.type,
-          status: result.status,
-          label: result.label,
-          year: result.year
-        };
-        this.onVacuumRemoved.emit(vacuum)
+        this.onVacuumRemoved.emit(result)
       }
     });
   }
